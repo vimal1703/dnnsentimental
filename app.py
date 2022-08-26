@@ -11,8 +11,6 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pickle
 
 
-# In[ ]:
-
 
 app = Flask(__name__ , templates_folder = templates)
 
@@ -24,7 +22,10 @@ def home():
 
 @app.route('/sentiment.html', methods=['POST', 'GET'])
 def sentiment():
+    
     str_features = [str(x) for x in request.form.values()]
+    nltk.download('vader_lexicon')
+    from nltk.sentiment.vader import SentimentIntensityAnalyzer
     sid = SentimentIntensityAnalyzer()
     score = ((sid.polarity_scores(str(str_features))))['compound']
     if(score >0):
